@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "ColorDesigner Local",
+  "version": "1.0.0",
+  "description": "Offline-Farbpalette-Generator für Designer",
+  "permissions": [],
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "icon.png"
+  }
+}

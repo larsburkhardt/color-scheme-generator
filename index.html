@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>ColorDesigner Local</title>
+    <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>ColorDesigner</h1>
+            <p class="subtitle">Local Palette Generator</p>
+        </header>
+
+        <main class="app-main">
+            <!-- Global Settings -->
+            <section class="global-settings-section">
+                <div class="input-group">
+                    <label for="displayFormat">Anzeigeformat</label>
+                    <select id="displayFormat">
+                        <option value="hex">HEX</option>
+                        <option value="rgb">RGB</option>
+                        <option value="hsl">HSL</option>
+                        <option value="oklch">OKLCH</option>
+                        <option value="lch">LCH</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Color Input Section -->
+            <section class="color-input-section">
+                <div class="input-group">
+                    <label for="colorPicker">Base Color</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="colorPicker" value="#468227">
+                        <input type="text" id="hexInput" value="#468227" placeholder="#468227">
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="rgbInput">RGB</label>
+                        <input type="text" id="rgbInput" placeholder="rgb(70, 130, 39)" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label for="hslInput">HSL</label>
+                        <input type="text" id="hslInput" placeholder="hsl(100, 54%, 33%)" readonly>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Harmony Generator -->
+            <section class="harmony-section">
+                <div class="input-group">
+                    <label for="harmonySelect">Harmony Rule</label>
+                    <select id="harmonySelect">
+                        <option value="complementary">Complementary</option>
+                        <option value="analogous">Analogous</option>
+                        <option value="triadic">Triadic</option>
+                        <option value="tetradic">Tetradic</option>
+                        <option value="split-complementary">Split-Complementary</option>
+                        <option value="monochromatic">Monochromatic</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                <div class="harmony-preview" id="harmonyPreview">
+                    <!-- Generated colors will appear here -->
+                </div>
+            </section>
+
+            <!-- Base Color Variations -->
+            <section class="variations-section">
+                <div class="section-header">
+                    <h2>Base Color Variations</h2>
+                </div>
+                
+                <div class="variation-group" data-color-index="0">
+                    <div class="variation-header">
+                        <div class="color-indicator" id="baseColorIndicator"></div>
+                        <span class="color-name">Primary</span>
+                        <span class="color-hex" id="baseColorHex">#468227</span>
+                    </div>
+                    
+                    <div class="variation-controls">
+                        <div class="control-row">
+                            <label>Tints:</label>
+                            <select class="tints-count" data-color-index="0">
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5" selected>5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <div class="control-row">
+                            <label>Shades:</label>
+                            <select class="shades-count" data-color-index="0">
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5" selected>5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <div class="control-row">
+                            <label>Tones:</label>
+                            <select class="tones-count" data-color-index="0">
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5" selected>5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="variation-rows">
+                        <div class="variation-row">
+                            <h3>Tints (Lighter)</h3>
+                            <div class="color-row" id="tintsRow-0"></div>
+                        </div>
+
+                        <div class="variation-row">
+                            <h3>Shades (Darker)</h3>
+                            <div class="color-row" id="shadesRow-0"></div>
+                        </div>
+
+                        <div class="variation-row">
+                            <h3>Tones (Desaturated)</h3>
+                            <div class="color-row" id="tonesRow-0"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Harmony Colors Variations -->
+            <section class="harmony-variations-section" id="harmonyVariationsSection">
+                <h2>Harmony Colors Variations</h2>
+                <div id="harmonyColorsVariations">
+                    <!-- Dynamically generated for each harmony color -->
+                </div>
+            </section>
+
+            <!-- Export Section -->
+            <section class="export-section">
+                <h2>Export</h2>
+                <div class="export-buttons">
+                    <button id="exportCSS" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Export CSS
+                    </button>
+                    <button id="exportSVG" class="btn btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Export SVG
+                    </button>
+                    <button id="saveProject" class="btn btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                            <polyline points="17 21 17 13 7 13 7 21"/>
+                            <polyline points="7 3 7 8 15 8"/>
+                        </svg>
+                        Save Project
+                    </button>
+                    <button id="loadProject" class="btn btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        Load Project
+                    </button>
+                </div>
+                <input type="file" id="fileInput" accept=".json" hidden>
+            </section>
+        </main>
+    </div>
+
+    <script src="src/vendor/colord.min.js"></script>
+    <script src="src/vendor/culori.min.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>
